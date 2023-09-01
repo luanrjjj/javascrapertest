@@ -79,49 +79,52 @@ public class Main {
     }
 
     public static void main(String[] args) throws InterruptedException {
-        // initializing the list of Java object to store
-        // the scraped data
-        List<PokemonProduct> pokemonProducts = Collections.synchronizedList(new ArrayList<>());
+           YoutuberScrapper getValues =  new YoutuberScrapper();
+           getValues.ScrappingYoutube();
 
-        // initializing the set of web page urls
-        // discovered while crawling the target website
-        Set<String> pagesDiscovered = Collections.synchronizedSet(new HashSet<>());
-
-        // initializing the queue of urls to scrape
-        List<String> pagesToScrape = Collections.synchronizedList(new ArrayList<>());
-        // initializing the scraping queue with the
-        // first pagination page
-        pagesToScrape.add("https://scrapeme.live/shop/page/1/");
-
-        // initializing the ExecutorService to run the
-        // web scraping process in parallel on 4 pages at a time
-        ExecutorService executorService = Executors.newFixedThreadPool(4) ;
-
-        // launching the web scraping process to discover some
-        // urls and take advantage of the parallelization process
-        scrapeProductPage(pokemonProducts, pagesDiscovered, pagesToScrape);
-
-        // the number of iteration executed
-        int i = 1;
-        // to limit the number to scrape to 5
-        int limit = 10;
-
-        while (!pagesToScrape.isEmpty() && i < limit) {
-            // registering the web scraping task
-            executorService.execute(() -> scrapeProductPage(pokemonProducts, pagesDiscovered, pagesToScrape));
-
-            // adding a 200ms delay for avoid overloading the server
-            TimeUnit.MILLISECONDS.sleep(200);
-
-            // incrementing the iteration number
-            i++;
-        }
-
-        // waiting up to 300 seconds to all pending tasks to end
-        executorService.shutdown();
-        executorService.awaitTermination(300, TimeUnit.SECONDS);
-
-        System.out.println(pokemonProducts.size());
+//        // initializing the list of Java object to store
+//        // the scraped data
+//        List<PokemonProduct> pokemonProducts = Collections.synchronizedList(new ArrayList<>());
+//
+//        // initializing the set of web page urls
+//        // discovered while crawling the target website
+//        Set<String> pagesDiscovered = Collections.synchronizedSet(new HashSet<>());
+//
+//        // initializing the queue of urls to scrape
+//        List<String> pagesToScrape = Collections.synchronizedList(new ArrayList<>());
+//        // initializing the scraping queue with the
+//        // first pagination page
+//        pagesToScrape.add("https://scrapeme.live/shop/page/1/");
+//
+//        // initializing the ExecutorService to run the
+//        // web scraping process in parallel on 4 pages at a time
+//        ExecutorService executorService = Executors.newFixedThreadPool(4) ;
+//
+//        // launching the web scraping process to discover some
+//        // urls and take advantage of the parallelization process
+//        scrapeProductPage(pokemonProducts, pagesDiscovered, pagesToScrape);
+//
+//        // the number of iteration executed
+//        int i = 1;
+//        // to limit the number to scrape to 5
+//        int limit = 10;
+//
+//        while (!pagesToScrape.isEmpty() && i < limit) {
+//            // registering the web scraping task
+//            executorService.execute(() -> scrapeProductPage(pokemonProducts, pagesDiscovered, pagesToScrape));
+//
+//            // adding a 200ms delay for avoid overloading the server
+//            TimeUnit.MILLISECONDS.sleep(200);
+//
+//            // incrementing the iteration number
+//            i++;
+//        }
+//
+//        // waiting up to 300 seconds to all pending tasks to end
+//        executorService.shutdown();
+//        executorService.awaitTermination(300, TimeUnit.SECONDS);
+//
+//        System.out.println(pokemonProducts.size());
 
         // writing the scraped data to a db or export it to a file...
     }
